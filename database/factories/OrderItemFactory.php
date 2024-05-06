@@ -20,17 +20,17 @@ class OrderItemFactory extends Factory
     {
 
 
+
+
         return [
-            'order_id' => Order::factory(),
-            'product_id' => Product::factory(), // Ensure you have a Product model and factory
-            'quantity' => $this->faker->numberBetween(1, 5),
+            'order_id' => Order::factory()->create()->id,
+            'product_id' => Product::factory()->create()->id, // Ensure you have a Product model and factory
+            'quantity' => 1,
             'price' => $this->faker->randomFloat(2, 20, 500), // Price before discount
-            'discount' => $this->faker->numberBetween(0, 100), // Discount in percentage
-            'description' => $this->faker->paragraph, // Description of the order item
-            'total_price' => function (array $attributes) {
-                // Calculates total price after discount
-                return $attributes['price'] * (1 - ($attributes['discount'] / 100)) * $attributes['quantity'];
-            }
+            'vat_rate' => $this->faker->randomElement([5, 10, 20]), // VAT rate percentage
+            'vat' => 0,
+            'product_description' => $this->faker->paragraph, // Description of the order item
+            'product_title' => $this->faker->company, // Description of the order item
         ];
 
     }

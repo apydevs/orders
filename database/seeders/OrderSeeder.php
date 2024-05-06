@@ -17,9 +17,9 @@ class OrderSeeder extends Seeder
     public function run(): void
     {
 
-      Order::factory()->count(3)
-                ->has(OrderItem::factory()->count(2))
-                ->has(OrderPaymentSchedule::factory()->count(1))
+        Order::factory()->count(3)
+            ->has(OrderItem::factory()->count(1))
+            ->has(OrderPaymentSchedule::factory(12))
             ->create();
     }
 }

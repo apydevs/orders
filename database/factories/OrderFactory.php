@@ -18,11 +18,11 @@ class OrderFactory extends Factory
     public function definition(): array
     {
 
-        $customer  = Customer::all()->take(1);
+        $customer  = Customer::get()->random();
+
         return [
             'customer_id' =>$customer->id,
-            'customer_account_no' => $customer->customer_account_no, // Generates an account number with format ACCT1234
-            'total' => $this->faker->numberBetween(100, 1000), // General total cost of the order
+            'customer_account_no' => $customer->account_reference, // Generates an account number with format ACCT1234
             'total_price' => $this->faker->randomFloat(2, 100, 1000), // Total price after including VAT
             'vat_rate' => $this->faker->randomElement([5, 10, 20]), // VAT rate percentage
             'vat' => function (array $attributes) {

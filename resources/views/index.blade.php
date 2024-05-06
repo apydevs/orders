@@ -18,7 +18,7 @@
                 </div>
                 <div class="flex flex-row">
                     <div>
-                        <span class="text-white">Total Orders:</span>  <button class="cursor-default focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full focus:ring-gray-400 mr-3 bg-transparent transition duration-150 ease-in-out rounded hover:bg-gray-700 text-white p-2 text-sm border border-white">{{$count}}</button>
+                        <span class="text-white">Total Orders:</span>  <button class="cursor-default focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full focus:ring-gray-400 mr-3 bg-transparent transition duration-150 ease-in-out rounded hover:bg-gray-700 text-white px-2 py-1 text-md border border-white">{{$count}}</button>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,7 @@
             <div class="container px-6 mx-auto">
                 <!-- Remove class [ h-64 ] when adding a card block -->
                 <div class="rounded shadow relative bg-white z-10 -mt-8 mb-8 w-full  p-4">
-                    Table
+                   <livewire:orders::orders-table/>
                 </div>
             </div>
 

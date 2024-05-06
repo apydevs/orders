@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="bg-gray-800 pt-8 pb-16 relative ">
+        <div class="bg-indigo-700 pt-8 pb-16 relative ">
             <div class="container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between">
                 <div class="flex-col flex lg:flex-row items-start lg:items-center">
                     <div class="ml-0 lg:ml-0 my-6 lg:my-0">

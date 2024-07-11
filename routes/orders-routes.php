@@ -12,8 +12,12 @@ Route::middleware([
     Route::get('/orders', [OrdersController::class, 'index'])->name('orders.index');
     // Route::get('/orders/create', [OrdersController::class, 'create'])->name('orders.create');
     // Route::post('/orders', [OrdersController::class, 'store'])->name('orders.store');
-    // Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.show');
+         Route::get('/orders/{order}', [OrdersController::class, 'show'])->name('orders.show');
+     Route::post('/orders/{order}', [OrdersController::class, 'process'])->name('schedule.payment');
+     Route::post('/orders/{OrderItem}/item', [OrdersController::class, 'ordered'])->name('orders.ordered');
+
+
     // Route::get('/orders/{order}/edit', [OrdersController::class, 'edit'])->name('orders.edit');
     // Route::put('/orders/{order}', [OrdersController::class, 'update'])->name('orders.update');
-    // Route::delete('/orders/{order}', [OrdersController::class, 'destroy'])->name('orders.destroy');
+     Route::delete('/orders/{order}', [OrdersController::class, 'destroy'])->name('orders.destroy');
 });

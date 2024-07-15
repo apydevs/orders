@@ -128,7 +128,7 @@ class OrdersTable extends DataTableComponent
             $query->where('customer_id', $this->customerId);
         }
         if($this->lastTen){
-
+            //today's orders for dashboard
             $query->orderBy('created_at', 'desc')->whereDate('orders.created_at', '=',Carbon::now() )
                 ->limit(10);
         }

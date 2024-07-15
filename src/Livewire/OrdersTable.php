@@ -129,7 +129,7 @@ class OrdersTable extends DataTableComponent
         }
         if($this->lastTen){
 
-            $query->orderBy('created_at', 'desc')
+            $query->orderBy('created_at', 'desc')->whereDate('orders.created_at', '=',Carbon::now() )
                 ->limit(10);
         }
         return $query;
@@ -198,7 +198,7 @@ class OrdersTable extends DataTableComponent
                 'dateFormat' => 'Y-m-d', // Date format that will be received by the filter
                 'earliestDate' => Carbon::now()->subYears(2)->format('Y-m-d'), // The earliest acceptable date
                 'latestDate' => Carbon::now()->format('Y-m-d'), // The latest acceptable date
-                'placeholder' => 'Enter Date Range', // A placeholder value
+                'placeholder' => 'Order Date Range', // A placeholder value
             ])
                 ->setFilterPillValues([0 => 'minDate', 1 => 'maxDate']) // The values that will be displayed for the Min/Max Date Values
                 ->filter(function (Builder $builder, array $dateRange) { // Expects an array.

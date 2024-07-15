@@ -318,7 +318,7 @@
                                        <p tabindex="0" class="focus:outline-none text-xs leading-3 text-gray-500 dark:text-gray-400 pt-4 pb-1 capitalize">Current {{$order->payment_schedule}} Schedule</p>
                                         <p tabindex="0" class="focus:outline-none text-base font-medium leading-none text-gray-800 dark:text-gray-100">{{$current_schedule}} </p>
                                         <p tabindex="0" class="focus:outline-none text-xs leading-3 text-gray-500 dark:text-gray-400 pt-4 pb-1">Paid</p>
-                                        <p tabindex="0" class="focus:outline-none text-base font-medium leading-none text-gray-800 dark:text-gray-100">£{{number_format($total_paid,5)}}</p>
+                                        <p tabindex="0" class="focus:outline-none text-base font-medium leading-none text-gray-800 dark:text-gray-100">£{{number_format($total_paid,2)}}</p>
                                         <p tabindex="0" class="focus:outline-none text-xs leading-3 text-gray-500 dark:text-gray-400 pt-4 pb-1">Payments On Time</p>
                                         <p tabindex="0" class="focus:outline-none text-base font-medium leading-none text-gray-800 dark:text-gray-100">{{$percentage}}%</p>
                                         <p tabindex="0" class="focus:outline-none text-xs leading-3 text-gray-500 dark:text-gray-400 pt-4 pb-1 capitalize">Created By {{$creator ? $creator->name :''}}</p>

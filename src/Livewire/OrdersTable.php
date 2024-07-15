@@ -5,6 +5,7 @@ namespace Apydevs\Orders\Livewire;
 use App\Traits\CaseInsensitiveSearch;
 use Apydevs\Customers\Models\Customer;
 use Apydevs\Orders\Models\Order;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -14,6 +15,7 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\DateColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\NumberRangeFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
@@ -188,6 +190,21 @@ class OrdersTable extends DataTableComponent
                     if ($value !== '') {
                         $builder->where('isContract', $value);
                     }
+                }),
+            DateRangeFilter::make('Order Period') ->config([
+                'allowInput' => true,   // Allow manual input of dates
+                'altFormat' => 'F j, Y', // Date format that will be displayed once selected
+                'ariaDateFormat' => 'F j, Y', // An aria-friendly date format
+                'dateFormat' => 'Y-m-d', // Date format that will be received by the filter
+                'earliestDate' => Carbon::now()->subYears(2)->format('Y-m-d'), // The earliest acceptable date
+                'latestDate' => Carbon::now()->format('Y-m-d'), // The latest acceptable date
+                'placeholder' => 'Enter Date Range', // A placeholder value
+            ])
+                ->setFilterPillValues([0 => 'minDate', 1 => 'maxDate']) // The values that will be displayed for the Min/Max Date Values
+                ->filter(function (Builder $builder, array $dateRange) { // Expects an array.
+                    $builder
+                        ->whereDate('orders.created_at', '>=', $dateRange['minDate']) // minDate is the start date selected
+                        ->whereDate('orders.created_at', '<=', $dateRange['maxDate']); // maxDate is the end date selected
                 }),
 
         ];

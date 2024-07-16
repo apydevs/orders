@@ -3,6 +3,7 @@
 namespace Apydevs\Orders\Http\Controllers;
 
 use App\Http\Controllers\Controller as Controller;
+use App\Models\GatewayReference;
 use App\Policies\PaymentGatewayPolicy;
 use App\Traits\Opayo;
 use App\Traits\OrderStatusTrait;
@@ -33,7 +34,6 @@ class OrdersController extends Controller
     public function show(Order $order){
 
 
-
       return  view('orders::show',[
             'total_paid'=>$order-> paymentsMade()->sum('payable_amount'),
             'percentage'=>$this->calculateOnTimePaymentPercentage($order->id),
@@ -44,7 +44,8 @@ class OrdersController extends Controller
             'items'=>$order->orderItems()->get() ,
             'schedules'=>$order->paymentSchedule()->orderBy('sequence_id','ASC')->paginate(6),
             'customer'=>$order->customer,
-            'creator'=>$order->user
+            'creator'=>$order->user,
+            'cardDetails'=>GatewayReference::where('card_identifier',mb_strtoupper($order->card_identifier))->first(),
       ]);
     }
 

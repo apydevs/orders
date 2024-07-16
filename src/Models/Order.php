@@ -2,6 +2,7 @@
 
 namespace Apydevs\Orders\Models;
 
+use App\Models\GatewayReference;
 use App\Models\Note;
 use App\Models\Scopes\DynamicLikeScope;
 use App\Models\Scopes\IlikeScope;
@@ -98,6 +99,11 @@ class Order extends Model
             });
     }
 
+
+        public function paymentRef(): \Illuminate\Database\Eloquent\Relations\HasOne
+        {
+            return $this->hasOne(GatewayReference::class,'card_identifier','card_identifier');
+        }
 
     /**
      * Get all the Order notes.

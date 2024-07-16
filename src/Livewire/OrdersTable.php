@@ -97,7 +97,7 @@ class OrdersTable extends DataTableComponent
             Column::make('Payment Week','current_schedule')
                 ->searchable()
                 ->sortable(),
-            BooleanColumn::make('Contract Phone','isContract')
+            BooleanColumn::make('Trust Mobile','isContract')
                 ->searchable()
                 ->sortable(),
             Column::make('Total','total_price')->label(fn ($row, Column $column) =>'£'.number_format($row->total_price,2))->searchable()->sortable( fn(Builder $query, string $direction) => $query->orderBy('total_price',$direction)),

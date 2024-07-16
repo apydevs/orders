@@ -180,7 +180,7 @@ class OrdersTable extends DataTableComponent
                         $builder->where('current_schedule', '=', $value);
                     }
                 }),
-            SelectFilter::make('Phone Contract')
+            SelectFilter::make('Trust Mobile')
                 ->options([
                     '' => 'All',
                     true => 'Yes',

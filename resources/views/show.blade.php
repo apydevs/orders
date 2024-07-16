@@ -235,7 +235,7 @@
                                                     <div class="flex items-center text-sm leading-none">
                                                         <p class="text-gray-800 dark:text-white ">Card:</p>
 
-                                                        <p x-show="show" class="text-black capitalize font-semibold  ml-3">{{$cardDetails->card_type}} {{$cardDetails->last_four}}</p>
+                                                        <p x-show="show" class="text-black capitalize font-semibold  ml-3">{{$cardDetails ? $cardDetails->card_type : ''}} {{$cardDetails ? $cardDetails->last_four:''}}</p>
                                                         <p x-show="!show" class="text-black capitalize font-semibold  ml-3">********** ***</p>
                                                         <div @click="show=!show">
                                                             <svg x-show="!show" data-slot="icon" class="h-5 w-5 ml-5" fill="none" stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">

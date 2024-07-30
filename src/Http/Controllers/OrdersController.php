@@ -34,6 +34,8 @@ class OrdersController extends Controller
     public function show(Order $order){
 
 
+
+
       return  view('orders::show',[
             'total_paid'=>$order-> paymentsMade()->sum('payable_amount'),
             'percentage'=>$this->calculateOnTimePaymentPercentage($order->id),
@@ -46,6 +48,7 @@ class OrdersController extends Controller
             'customer'=>$order->customer,
             'creator'=>$order->user,
             'cardDetails'=>GatewayReference::where('card_identifier',mb_strtoupper($order->card_identifier))->first(),
+
       ]);
     }
 
@@ -183,7 +186,16 @@ class OrdersController extends Controller
 
 
         if($current->sequence_id >= 1 && $scheduleUpdate->payment_processed){
-            $order->current_schedule = $scheduleUpdate->sequence_id+1;
+
+
+            if($order->current_schedule < 12 && !$order->isContract){
+                $order->current_schedule = $scheduleUpdate->sequence_id+1;
+            }
+            if($order->current_schedule < 156 && $order->isContract){
+                $order->current_schedule = $scheduleUpdate->sequence_id+1;
+            }
+
+
             $order->status = 'active';
             $order->update();
         }

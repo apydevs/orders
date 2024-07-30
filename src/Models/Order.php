@@ -3,6 +3,7 @@
 namespace Apydevs\Orders\Models;
 
 use App\Models\GatewayReference;
+use App\Models\MobileDetail;
 use App\Models\Note;
 use App\Models\Scopes\DynamicLikeScope;
 use App\Models\Scopes\IlikeScope;
@@ -112,6 +113,12 @@ class Order extends Model
     public function notes(): MorphMany
     {
         return $this->morphMany(Note::class, 'noteable');
+    }
+
+
+    public function contractOrder(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(MobileDetail::class, 'order_id', 'id');
     }
 
 }

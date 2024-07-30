@@ -1,5 +1,5 @@
 <x-app-layout>
-<div x-data="{ modalOpen: false,newDeliveryAddress: false }">
+<div x-data="{ modalOpen: false,newDeliveryAddress: false,modalMobileOpen:false,modalEditMobileOpen:false }">
     <x-slot name="header">
         <div class="bg-indigo-700 pt-8 pb-16 relative ">
             <div class="container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between">
@@ -56,6 +56,7 @@
                         <option class="text-sm text-gray-600">Customer</option>
                         <option class="text-sm text-gray-600">Payment</option>
                         <option class="text-sm text-gray-600">Notes</option>
+                        <option class="text-sm text-gray-600">Mobile Info</option>
                     </select>
                 </div>
                 <div class="xl:w-full xl:mx-0 h-12 hidden sm:block bg-white dark:bg-gray-800 rounded shadow">
@@ -72,6 +73,13 @@
                             <span class="mb-3 dark:text-white ">Notes</span>
                             <div class="w-full h-1 bg-indigo-700 rounded-t-md hidden"></div>
                         </button>
+
+                        @if($order->isContract == true)
+                        <button data-tab="tab6" onclick="activeTab(this)" class="hover:text-indigo-700 focus:text-indigo-700 focus:outline-none text-sm text-gray-600 flex flex-col justify-between border-indigo-700 pt-3 rounded-t mr-8 font-normal cursor-pointer">
+                            <span class="mb-3 dark:text-white ">Mobile Info</span>
+                            <div class="w-full h-1 bg-indigo-700 rounded-t-md hidden"></div>
+                        </button>
+                        @endif
                     </div>
                 </div>
 
@@ -267,6 +275,101 @@
                 </div>
                 <div id="tab5" class="tab-content hidden bg-white/50 p-4 pb-16">
                     <livewire:notes usage="Order" :ref="$order"/>
+                </div>
+                <div id="tab6" class="tab-content hidden bg-white/50 p-4 pb-16">
+
+                    @if($order->isContract == true)
+                        @foreach($order->contractOrder as $mob)
+                            <table  class="w-full whitespace-nowrap border-separate border-gray-100 [border-spacing:0.55rem] bg-white">
+                                <tbody>
+                                <tr tabindex="0" class="focus:outline-none  ">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">IMEI:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->imei }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr tabindex="0" class="focus:outline-none my-6 mb-2">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">Serial:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->serial }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr tabindex="0" class="focus:outline-none my-6 mb-2">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">Phone Number:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->phone }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr tabindex="0" class="focus:outline-none my-6 mb-2">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">Phone Model:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->model }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr tabindex="0" class="focus:outline-none my-6 mb-2">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">Ref:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->ref }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr tabindex="0" class="focus:outline-none my-6 mb-2">
+                                    <td>
+                                        <div class="flex items-center">
+                                            <div class="pl-3">
+                                                <div class="flex items-center text-sm leading-none">
+                                                    <p class="text-gray-800 dark:text-white ">Order ID:</p>
+                                                    <p class="text-black capitalize font-semibold  ml-3">{{ $mob->order_id }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div  class="bg-white text-black text-right underline w-full p-4" >
+                               <span @click="modalMobileOpen =!modalMobileOpen, modalEditMobileOpen=true" class="underline font-semibold">Edit</span>
+                            </div>
+                        @endforeach
+
+                            @if($order->contractOrder->count() == 0)
+                            {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day. --}}
+                                <button @click="modalMobileOpen=true,modalEditMobileOpen=false" type="button" class="rounded-full float-right bg-indigo-600 p-2 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+                                    </svg>
+                                </button>
+                                @endif
+                    @endif
                 </div>
 
 
@@ -498,6 +601,42 @@
         </template>
     </div>
 
+
+   <div @keydown.escape.window="modalMobileOpen = false"  class="relative z-50 w-auto h-auto">
+     <template x-teleport="body">
+        <div x-show="modalMobileOpen" class="fixed top-0 left-0 z-[99] flex items-center justify-center w-screen h-screen" x-cloak>
+            <div x-show="modalMobileOpen"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-300"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="modalMobileOpen=false"
+                 class="absolute inset-0 w-full h-full bg-black bg-opacity-40"></div>
+            <div x-show="modalMobileOpen"
+                 x-trap.inert.noscroll="modalMobileOpen"
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
+                 x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                 class="relative w-full py-6 bg-white px-7 sm:max-w-lg sm:rounded-lg">
+
+
+                <div x-show="modalEditMobileOpen == true">
+                    <livewire:mobile-details  :orderId="$order->id" :id="$order->id" :customerId="$order->customer_id"/>
+                </div>
+
+                <div x-show="modalEditMobileOpen == false">
+                     <livewire:mobile-details x-show="modalEditMobileOpen == false"  :customerId="$order->customer_id" :orderId="$order->id"/>
+                </div>
+            </div>
+        </div>
+    </template>
+  </div>
+
     <div
         @keydown.escape.window="newDeliveryAddress = false"
         class="relative z-50 w-auto h-auto">
@@ -529,6 +668,8 @@
                 </div>
         </template>
     </div>
+
+
     <script type="text/javascript">
         function activeTab(element) {
             let siblings = element.parentNode.querySelectorAll("button");

@@ -94,6 +94,7 @@ class OrdersTable extends DataTableComponent
             )->sortable()->searchable(),
 
             Column::make('Duration Weeks','duration')->searchable()->sortable(),
+
             Column::make('Payment Week','current_schedule')
                 ->searchable()
                 ->sortable(),
